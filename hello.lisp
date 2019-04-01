@@ -1,0 +1,7 @@
+(defun inputTest()
+(terpri)
+(setq name (read))
+(princ "hello ")
+(write name)
+)
+(inputTest)
