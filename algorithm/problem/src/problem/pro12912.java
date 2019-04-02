@@ -9,9 +9,6 @@ public class pro12912 {
 		if(a > b) {
 			small = b;
 			big = a;
-		}else if(a < b) {
-			small = a;
-			big = b;
 		}else {
 			small = a;
 			big = b;
