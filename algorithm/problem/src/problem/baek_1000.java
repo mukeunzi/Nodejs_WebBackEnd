@@ -2,7 +2,7 @@ package problem;
 
 import java.util.*;
 
-public class baek1001 {
+public class baek_1000 {
 
 	public static void main(String[] args) {
 		int a, b;
@@ -11,7 +11,7 @@ public class baek1001 {
 		a = scan.nextInt();
 		b = scan.nextInt();
 		
-		System.out.println(a - b);
+		System.out.println(a + b);
 	}
 
 }

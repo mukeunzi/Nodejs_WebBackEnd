@@ -1,6 +1,6 @@
 package problem;
 
-public class pro12912 {
+public class pro_12912 {
 	
 	public long solution(int a, int b) {
 		int big, small;
@@ -22,7 +22,7 @@ public class pro12912 {
 	}
 
 	public static void main(String[] args) {
-		pro12912 pro = new pro12912();
+		pro_12912 pro = new pro_12912();
 		System.out.println(pro.solution(3, 5));
 	}
 
