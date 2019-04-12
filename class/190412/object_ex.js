@@ -25,18 +25,17 @@ const data = {
     }
 }
 
+/* 문제. 숫자타입의 key값을 추출해 배열만들기 */
+
+
+// 코드개선 : 2차원 배열을 이용해 value의 타입이 숫자이면 result배열에 push함.
+                      
 const result = [];
 
-for(key1 in data){
-    if(typeof data[key1] === "number"){
-        result.push(key1);
-    }else if(typeof data[key1] === "object"){
-        const valueObj = data[key1];
-
-        for(key2 in valueObj){
-            if(typeof valueObj[key2] === "number"){
-                result.push(key2);
-            }
+for(let key1 in data){
+    for(key2 in data[key1]){
+        if(typeof data[key1][key2] === "number"){
+            result.push(key2);
         }
     }
 }
