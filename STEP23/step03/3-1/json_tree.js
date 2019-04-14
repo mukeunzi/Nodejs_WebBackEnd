@@ -1,4 +1,4 @@
-const jsonTree = [{
+const jsonData = [{
 	"id": 1,
 	"name": "Yong",
 	"phone": "010-0000-0000",
@@ -79,6 +79,19 @@ const jsonTree = [{
 	}]
 }];
 
-const jsonData = jsonTree[0];
+const resultList = [];
 
-if(jsonData.childnode != )
+function getNametypeCheck(data){
+	data.forEach(element => {
+		if(element.type === "sk"){
+			resultList.push(element.name);
+		}
+		if(element.childnode.length !== 0){
+			getNametypeCheck(element.childnode);
+		}
+	});
+
+	return resultList;
+}
+
+console.log(getNametypeCheck(jsonData));
