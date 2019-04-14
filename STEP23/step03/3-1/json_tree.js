@@ -79,6 +79,8 @@ const jsonData = [{
 	}]
 }];
 
+// 문제. jsonData에서 type이 "sk"인 name 출력하기
+
 const resultList = [];
 
 function getNametypeCheck(data){
