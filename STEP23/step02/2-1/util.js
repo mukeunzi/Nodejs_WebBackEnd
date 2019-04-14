@@ -3,6 +3,8 @@
     console.log("WELCOME UTIL MODULE : " + result);
 })();
 
+// var checkNumbers = arrVal => {if((typeof arrVal == "undefined") || (typeof arrVal == "string")) return true;}
+
 function checkNumbers(arrVal){
     if((typeof arrVal == "undefined") || (typeof arrVal == "string")){
         return true;
