@@ -20,13 +20,13 @@ module.exports = [
 	{
 		name: '일찍 일어나기',
 		tags: ['difficult', 'hate'],
-		status: 'doing',
+		status: 'todo',
 		id: 312323
 	},
 	{
-		name: '핫도그 먹기',
-		tags: ['hot', 'food'],
-		status: 'doing',
+		name: '자전거타기',
+		tags: ['health', 'favorite'],
+		status: 'done',
 		id: 312323
 	}
 ];
