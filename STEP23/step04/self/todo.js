@@ -9,4 +9,19 @@ const todoList = todos.reduce((acc, cur) => {
 	return acc;
 }, {});
 
-console.log(todoList);
+//console.log(todoList);
+
+const show = input => {
+	if (input === 'all') {
+		showAll();
+	}
+};
+
+const showAll = () => {
+	let statusResult = [];
+	for (status in todoList) {
+		statusResult.push(`${status} : ${todoList[status].length}개`);
+	}
+	console.log(`현재상태 : ${statusResult.join(', ')}`);
+};
+showAll();
