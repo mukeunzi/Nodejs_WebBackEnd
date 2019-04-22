@@ -27,14 +27,16 @@ rl.on('close', function() {
 	process.exit();
 });
 
-const todoList = todos.reduce((acc, cur) => {
-	if (acc[cur.status] === undefined) {
-		acc[cur.status] = [cur.name];
-	} else {
-		acc[cur.status].push(cur.name);
-	}
-	return acc;
-}, {});
+const makeTodoList = data => {
+	return data.reduce((acc, cur) => {
+		if (acc[cur.status] === undefined) {
+			acc[cur.status] = [cur.name];
+		} else {
+			acc[cur.status].push(cur.name);
+		}
+		return acc;
+	}, {});
+};
 
 const show = type => {
 	let printResult = [];
@@ -58,6 +60,13 @@ const printAll = () => {
 const printStatus = type => {
 	return `${type} 리스트 : 총${todoList[type].length}건 : ${todoList[type]}`;
 };
+
+const deleteTodo = id => {
+	const deletedTodo = todos.filter(todo => todo.id !== Number(id));
+	todoList = makeTodoList(deletedTodo);
+};
+
+let todoList = makeTodoList(todos);
 
 // show('all');
 // show('todo');
