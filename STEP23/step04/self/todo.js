@@ -12,11 +12,14 @@ const todoList = todos.reduce((acc, cur) => {
 //console.log(todoList);
 
 const show = type => {
+	let printResult = [];
 	if (type === 'all') {
-		printAll();
+		printResult = printAll();
 	} else {
-		printStatus(type);
+		printResult = printStatus(type);
 	}
+
+	console.log(printResult);
 };
 
 const printAll = () => {
@@ -24,11 +27,11 @@ const printAll = () => {
 	for (status in todoList) {
 		statusResult.push(`${status} : ${todoList[status].length}개`);
 	}
-	console.log(`현재상태 : ${statusResult.join(', ')}`);
+	return `현재상태 : ${statusResult.join(', ')}`;
 };
 
 const printStatus = type => {
-	console.log(`${type} LIST : 총${todoList[type].length}건 : ${todoList[type]}`);
+	return `${type} 리스트 : 총${todoList[type].length}건 : ${todoList[type]}`;
 };
 
 show('all');
