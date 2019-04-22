@@ -1,4 +1,31 @@
 const todos = module.require('./data');
+const readline = require('readline');
+
+const rl = readline.createInterface({
+	input: process.stdin,
+	output: process.stdout
+});
+
+rl.setPrompt('명령하세요 : ');
+rl.prompt();
+
+rl.on('line', function(input) {
+	if (input === 'exit') {
+		rl.close();
+	}
+
+	const [command, ...condition] = input.split('$');
+	if (command === 'show') {
+		show(condition[0]);
+	} else if (command === 'delete') {
+		deleteTodo(condition[0]);
+	}
+
+	rl.prompt();
+});
+rl.on('close', function() {
+	process.exit();
+});
 
 const todoList = todos.reduce((acc, cur) => {
 	if (acc[cur.status] === undefined) {
@@ -8,8 +35,6 @@ const todoList = todos.reduce((acc, cur) => {
 	}
 	return acc;
 }, {});
-
-//console.log(todoList);
 
 const show = type => {
 	let printResult = [];
@@ -34,7 +59,7 @@ const printStatus = type => {
 	return `${type} 리스트 : 총${todoList[type].length}건 : ${todoList[type]}`;
 };
 
-show('all');
-show('todo');
-show('doing');
-show('done');
+// show('all');
+// show('todo');
+// show('doing');
+// show('done');
