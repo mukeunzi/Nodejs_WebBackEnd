@@ -1,24 +1,18 @@
 require('date-utils');
-const Log = module.require('./log.js');
-const todoLog = new Log();
 
 const commonDelaySecond = 1000;
 const updateDelaySecond = 3000;
 
-module.exports = Todo = function(todoList, rl) {
+module.exports = Todo = function(todoList, readline) {
 	this.todoList = todoList;
-	this.readline = rl;
+	this.readline = readline;
 };
 
-Todo.prototype.show = function(element) {
-	const regExp = /^all$|^todo$|^doing$|^done$/;
-	const matchRegExp = element.match(regExp);
-	if (matchRegExp === null) {
-		throw new Error('COMMAND_ERROR');
-	} else if (matchRegExp[0] === 'all') {
+Todo.prototype.show = function(command) {
+	if (command === 'all') {
 		this.printAll();
 	} else {
-		this.printList(matchRegExp[0]);
+		this.printList(command);
 	}
 };
 
@@ -52,31 +46,27 @@ Todo.prototype.printList = function(status) {
 };
 
 Todo.prototype.add = function(name, tag) {
-	if (name === undefined || tag === undefined || name === '' || tag === '') {
-		throw new Error('COMMAND_ERROR');
-	}
-	const tagResult = tag.replace(/\[|\'|\"|\]/g, '').split(',');
 	const id = this.getId();
 	const newData = {
 		name: name,
-		tags: tagResult,
+		tag,
 		status: 'todo',
 		id: id
 	};
 	this.todoList.push(newData);
-	const prevData = {};
-	Object.assign(prevData, newData);
+	const prevData = Object.assign({}, newData);
 	prevData.status = '삭제';
 	console.log(`${newData.name} 1개가 추가되었습니다. (id : ${newData.id})`);
-	todoLog.addLog('add', prevData, newData, this.todoList.length - 1);
+
 	setTimeout(() => {
 		this.printAll();
 	}, commonDelaySecond);
+	return { action: 'add', prevData, nextData: newData, todoListIndex: this.todoList.length - 1 };
 };
 
 Todo.prototype.getId = function() {
 	const id = new Date();
-	return Number(id.toFormat('YYMMDDHHMISS'));
+	return Number(id.toFormat('YYMMDDHH24MISS'));
 };
 
 Todo.prototype.checkValidId = function(id) {
@@ -87,45 +77,32 @@ Todo.prototype.checkValidId = function(id) {
 			return Number(id) === element.id;
 		}
 	});
-	if (targetData[0] === undefined) {
-		throw new Error('ID_ERROR');
-	}
 
+	if (targetData[0] === undefined) {
+		return false;
+	}
 	return index;
 };
 
-Todo.prototype.delete = function(id) {
-	const index = this.checkValidId(id);
-	const deletingName = this.todoList[index].name;
+Todo.prototype.getStatus = function(index) {
+	return this.todoList[index].status;
+};
 
-	console.log(`${deletingName}가 ${this.todoList[index].status}에서 삭제됐습니다.`);
-	const nextData = {};
-	Object.assign(nextData, this.todoList[index]);
+Todo.prototype.delete = function(index) {
+	const deletingData = this.todoList[index];
+	console.log(`${deletingData.name}가 ${deletingData.status}에서 삭제됐습니다.`);
+	const nextData = Object.assign({}, this.todoList[index]);
 	nextData.status = '삭제';
-	todoLog.addLog('delete', this.todoList[index], nextData, index);
 	this.todoList.splice(index, 1);
 	setTimeout(() => {
 		this.printAll();
 	}, commonDelaySecond);
+	return { action: 'delete', prevData: deletingData, nextData, todoListIndex: index };
 };
 
-Todo.prototype.update = function(id, status) {
-	if (status === undefined) {
-		throw new Error('COMMAND_ERROR');
-	}
-	const index = this.checkValidId(id);
-	const regExp = /^todo$|^doing$|^done$/;
-	const matchRegExp = status.match(regExp);
-
-	if (matchRegExp === null) {
-		throw new Error('COMMAND_ERROR');
-	} else if (this.todoList[index].status === status) {
-		throw new Error('STATUS_ERROR');
-	}
-	const prevData = {};
-	Object.assign(prevData, this.todoList[index]);
+Todo.prototype.update = function(index, status) {
+	const prevData = Object.assign({}, this.todoList[index]);
 	this.todoList[index].status = status;
-	todoLog.addLog('update', prevData, this.todoList[index], index);
 
 	setTimeout(() => {
 		console.log(`"${this.todoList[index].name}"가(이) ${status}로 변경되었습니다.`);
@@ -133,14 +110,13 @@ Todo.prototype.update = function(id, status) {
 			this.printAll();
 		}, commonDelaySecond);
 	}, updateDelaySecond);
+	return { action: 'update', prevData, nextData: this.todoList[index], todoListIndex: index };
 };
 
-Todo.prototype.undo = function() {
-	todoLog.undo();
-	this.readline.prompt();
-};
-
-Todo.prototype.redo = function() {
-	todoLog.redo();
-	this.readline.prompt();
+Todo.prototype.undoAndRedo = function(obj) {
+	if (obj.data == undefined) {
+		this.todoList.splice(obj.todoListIndex, obj.deleteCount);
+	} else {
+		this.todoList.splice(obj.todoListIndex, obj.deleteCount, obj.data);
+	}
 };
