@@ -38,11 +38,15 @@ class ArrayParser {
 	arrayParser(str) {
 		const token = this.lexer(str);
 		this.parser(token);
-		console.log(this.result);
+		return this.printResult();
+	}
+
+	printResult() {
+		return this.result;
 	}
 }
 
 const str = '[123, 22, 33]';
 const myArrayParser = new ArrayParser();
 const jsonStr = myArrayParser.arrayParser(str);
-// console.log(JSON.stringify(jsonStr, null, 2));
+console.log(JSON.stringify(jsonStr, null, 2));
