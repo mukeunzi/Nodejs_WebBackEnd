@@ -1,5 +1,5 @@
 const readline = require('readline');
-const ValidCheck = module.require('./validCheck');
+const ValidCheck = module.require('./valid_check');
 const Todo = module.require('./todo.js');
 const todoList = module.require('./data.js');
 const Log = module.require('./log.js');
