@@ -9,24 +9,24 @@ module.exports = [
 		name: '그림 그리기',
 		tags: ['picture', 'favorite'],
 		status: 'doing',
-		id: 312323
+		id: 35435345
 	},
 	{
-		name: '마라탕먹기',
-		tags: ['mara', 'food'],
-		status: 'doing',
-		id: 56345
-	},
-	{
-		name: '일찍 일어나기',
-		tags: ['difficult', 'hate'],
-		status: 'todo',
-		id: 65465
-	},
-	{
-		name: '자전거타기',
-		tags: ['health', 'favorite'],
+		name: '꽃구경하기',
+		tags: ['flower', 'favorite'],
 		status: 'done',
-		id: 99879
+		id: 7657
+	},
+	{
+		name: '저녁식사',
+		tags: ['dinner', 'food'],
+		status: 'todo',
+		id: 097989
+	},
+	{
+		name: '커피마시기',
+		tags: ['coffee', 'favorite'],
+		status: 'doing',
+		id: 65464
 	}
 ];
