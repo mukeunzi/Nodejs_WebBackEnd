@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+	</head>
+	<body>
+		<form name="frmSignUp" method="post" onsubmit="return validCheckInput();" action="/login">
+			<input type="text" id="fname" name="fname" placeholder="성" required />
+			<input type="text" id="lname" name="lname" placeholder="이름" required /><br />
+			<input type="text" id="id" name="id" placeholder="아이디" required /><br />
+			<input type="password" id="password" name="password" placeholder="비밀번호" required />
+			<input type="password" id="rePassword" name="rePassword" placeholder="확인" required /><br />
+			<input type="submit" value="회원가입" />
+		</form>
+	</body>
+	<script>
+		const validCheckInput = () => {
+			const signUpForm = document.forms['frmSignUp'];
+			const fname = signUpForm['fname'].value;
+			const lname = signUpForm['lname'].value;
+			const id = signUpForm['id'].value;
+			const password = signUpForm['password'].value;
+			const rePassword = signUpForm['rePassword'].value;
+
+			if (!isValid({ fname, lname, id, password, rePassword })) {
+				return false;
+			}
+
+			return true;
+			// const signUpData = { name: fname + lname, id, password };
+		};
+
+		const isValid = ({ fname, lname, id, password, rePassword }) => {
+			return validCheckName(fname, lname) && validCheckId(id) && validCheckPassword(password, rePassword);
+		};
+
+		const validCheckName = (fname, lname) => {
+			const kor_eng_num_RegExp = /^[가-힣ㄱ-ㅎㅏ-ㅣA-Za-z0-9]{1,10}$/; //한글, 영어, 숫자
+			const isValidFName = kor_eng_num_RegExp.test(fname);
+			const isValidLName = kor_eng_num_RegExp.test(lname);
+
+			if (!isValidFName) {
+				document.querySelector('#fname').focus();
+				return false;
+			}
+			if (!isValidLName) {
+				document.querySelector('#lname').focus();
+				return false;
+			}
+
+			return true;
+		};
+
+		const validCheckId = id => {
+			const eng_num_dot_RegExp = /^[A-Za-z0-9\.]{1,10}$/; //영어, 숫자, 점(.)
+			const isValidId = eng_num_dot_RegExp.test(id);
+
+			if (!isValidId) {
+				document.querySelector('#id').focus();
+				return false;
+			}
+
+			return true;
+		};
+
+		const validCheckPassword = (password, rePassword) => {
+			const eng_num_RegExp = /^[A-za-z0-9]{8,20}$/; //영어, 숫자
+			const isValidPassword = eng_num_RegExp.test(password);
+
+			if (!isValidPassword) {
+				document.querySelector('#rePassword').value = '';
+				document.querySelector('#password').focus();
+				return false;
+			}
+			if (password !== rePassword) {
+				document.querySelector('#rePassword').value = '';
+				document.querySelector('#rePassword').focus();
+				return false;
+			}
+
+			return true;
+		};
+	</script>
+</html>
