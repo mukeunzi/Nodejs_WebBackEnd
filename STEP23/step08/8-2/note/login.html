@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+	</head>
+	<body>
+		<form name="frmLogIn" method="post" onsubmit="return validCheckInput();" action="/login">
+			<input type="text" id="email" name="email" placeholder="이메일" required /><br />
+			<input type="password" id="password" name="password" placeholder="비밀번호" required /><br />
+			<input type="submit" value="로그인" />
+		</form>
+		<a href="/signUp">계정 만들기</a>
+	</body>
+</html>
